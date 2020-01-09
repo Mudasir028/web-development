@@ -1,0 +1,426 @@
+Engines are complicated. But the basics are easy.
+
+The engine (embedded if it’s a browser) reads (“parses”) the script.
+Then it converts (“compiles”) the script to the machine language.
+And then the machine code runs, pretty fast.
+The engine applies optimizations at each step of the process. 
+It even watches the compiled script as it runs, analyzes the data that flows through it,
+and further optimizes the machine code based on that knowledge.
+Always “use strict”
+We have yet to cover the differences between strict mode and the “default” mode.
+
+In the next chapters, as we learn language features, we’ll note the differences between the strict and default modes.
+ Luckily, there aren’t many and they actually make our lives better.
+
+For now, it’s enough to know about it in general:
+--------------------------------
+USE STRICT:
+The "use strict" directive switches the engine to the “modern” mode, changing the behavior of some built-in features.
+ We’ll see the details later in the tutorial.
+Strict mode is enabled by placing "use strict" at the top of a script or function. Several language features, 
+like “classes” and “modules”, enable strict mode automatically.
+Strict mode is supported by all modern browsers.
+We recommended always starting scripts with "use strict".
+All examples in this tutorial assume strict mode unless (very rarely) specified otherwise
+--------------------------------------------------
+
+VARIABLE:
+We can declare variables to store data by using the var, let, or const keywords.
+
+let – is a modern variable declaration.
+var – is an old-school variable declaration. Normally we don’t use it at all, but we’ll cover subtle differences from let in the chapter The old "var", just in case you need them.
+const – is like let, but the value of the variable can’t be changed.
+Variables should be named in a way that allows us to easily understand what’s inside them.
+-------------------------------------------------------
+DATA TYPE:
+There are 7 basic data types in JavaScript.
+
+number for numbers of any kind: integer or floating-point.
+string for strings. A string may have one or more characters, there’s no separate single-character type.
+boolean for true/false.
+null for unknown values – a standalone type that has a single value null.
+undefined for unassigned values – a standalone type that has a single value undefined.
+object for more complex data structures.
+symbol for unique identifiers.
+The typeof operator allows us to see which type is stored in a variable.
+
+Two forms: typeof x or typeof(x).
+Returns a string with the name of the type, like "string".
+For null returns "object" – this is an error in the language, it’s not actually an object.
+In the next chapters, we’ll concentrate on primitive values and once we’re familiar with them, we’ll move on to objects.
+
+Backticks embed the expression inside ${...} into the stringz
+Type Conversions
+
+The three most widely used type conversions are to string, to number, and to boolean.
+
+String Conversion – Occurs when we output something. Can be performed with String(value). The conversion to string is usually obvious for primitive values.
+
+Numeric Conversion – Occurs in math operations. Can be performed with Number(value).
+
+The conversion follows the rules:
+
+Value	Becomes…
+undefined	NaN
+null	0
+true / false	1 / 0
+string	The string is read “as is”, whitespaces from both sides are ignored. An empty string becomes 0. An error gives NaN.
+Boolean Conversion – Occurs in logical operations. Can be performed with Boolean(value).
+
+Follows the rules:
+
+Value	Becomes…
+0, null, undefined, NaN, ""	false
+any other value	true
+Most of these rules are easy to understand and memorize. The notable exceptions where people usually make mistakes are:
+
+undefined is NaN as a number, not 0.
+"0" and space-only strings like " " are true as a boolean.
+Objects aren’t covered here. We’ll return to them later in the chapter Object to primitive conversion that is devoted exclusively to objects after we learn more basic things about JavaScript.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CAMPARISON:
+Comparison operators return a boolean value.
+Strings are compared letter-by-letter in the “dictionary” order.
+When values of different types are compared, they get converted to numbers (with the exclusion of a strict equality check).
+The values null and undefined equal == each other and do not equal any other value.
+Be careful when using comparisons like > or < with variables that can occasionally be null/undefined. Checking for null/undefined separately is a good idea.
+
+What will be the result for these expressions?
+
+5 > 4
+"apple" > "pineapple"
+"2" > "12"
+undefined == null
+undefined === null
+null == "\n0\n"
+null === +"\n0\n"
+solution
+5 > 4 → true
+"apple" > "pineapple" → false
+"2" > "12" → true
+undefined == null → true
+undefined === null → false
+null == "\n0\n" → false
+null === +"\n0\n" → false
+Some of the reasons:
+
+Obviously, true.
+Dictionary comparison, hence false.
+Again, dictionary comparison, first char of "2" is greater than the first char of "1".
+Values null and undefined equal each other only.
+Strict equality is strict. Different types from both sides lead to false.
+Similar to (4), null only equals undefined.
+Strict equality of different types.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Interaction: alert, prompt, confirm:
+We covered 3 browser-specific functions to interact with visitors:
+
+alert:
+shows a message.
+prompt:
+shows a message asking the user to input text. It returns the text or, if Cancel button or Esc is clicked, null.
+confirm:
+shows a message and waits for the user to press “OK” or “Cancel”. It returns true for OK and false for Cancel/Esc.
+All these methods are modal: they pause script execution and don’t allow the visitor to interact with the rest of the page until the window has been dismissed.
+
+There are two limitations shared by all the methods above:
+
+The exact location of the modal window is determined by the browser. Usually, it’s in the center.
+The exact look of the window also depends on the browser. We can’t modify it.
+That is the price for simplicity. There are other ways to show nicer windows and richer interaction with the visitor, but if “bells and whistles” do not matter much, these methods work just fine.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Conditional operators: if, '?':
+
+
+
+ternary:
+The so-called “conditional” or “question mark” operator lets us do that in a shorter and simpler way.
+
+The operator is represented by a question mark ?. Sometimes it’s called “ternary”, because the operator has three operands. It is actually the one and only operator in JavaScript which has that many.
+
+The syntax is:
+
+let result = condition ? value1 : value2;
+The condition is evaluated: if it’s truthy then value1 is returned, otherwise – value2.
+
+For example:
+
+let accessAllowed = (age > 18) ? true : false;
+Technically, we can omit the parentheses around age > 18. The question mark operator has a low precedence, so it executes after the comparison >.
+
+This example will do the same thing as the previous one:
+
+// the comparison operator "age > 18" executes first anyway
+// (no need to wrap it into parentheses)
+let accessAllowed = age > 18 ? true : false;
+But parentheses make the code more readable, so we recommend using them.
+
+Please note:
+In the example above, you can avoid using the question mark operator because the comparison itself returns true/false:
+
+// the same
+let accessAllowed = age > 18;
+Multiple ‘?’
+A sequence of question mark operators ? can return a value that depends on more than one condition.
+
+For instance:
+
+ let age = prompt('age?', 18);
+
+let message = (age < 3) ? 'Hi, baby!' :
+  (age < 18) ? 'Hello!' :
+  (age < 100) ? 'Greetings!' :
+  'What an unusual age!';
+
+alert( message );
+It may be difficult at first to grasp what’s going on. But after a closer look, we can see that it’s just an ordinary sequence of tests:
+
+The first question mark checks whether age < 3.
+If true – it returns 'Hi, baby!'. Otherwise, it continues to the expression after the colon ‘":"’, checking age < 18.
+If that’s true – it returns 'Hello!'. Otherwise, it continues to the expression after the next colon ‘":"’, checking age < 100.
+If that’s true – it returns 'Greetings!'. Otherwise, it continues to the expression after the last colon ‘":"’, returning 'What an unusual age!'.
+Here’s how this looks using if..else:
+
+if (age < 3) {
+  message = 'Hi, baby!';
+} else if (age < 18) {
+  message = 'Hello!';
+} else if (age < 100) {
+  message = 'Greetings!';
+} else {
+  message = 'What an unusual age!';
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Logical operators:
+Precedence of AND && is higher than OR ||
+The precedence of AND && operator is higher than OR ||.
+
+So the code a && b || c && d is essentially the same as if the && expressions were in parentheses: (a && b) || (c && d).
+
+Just like OR, the AND && operator can sometimes replace if.
+
+For instance:
+
+ let x = 1;
+
+(x > 0) && alert( 'Greater than zero!' );
+
+Examples:
+// Runs.
+// The result of -1 || 0 = -1, truthy
+if (-1 || 0) alert( 'first' );
+
+// Doesn't run
+// -1 && 0 = 0, falsy
+if (-1 && 0) alert( 'second' );
+
+// Executes
+// Operator && has a higher precedence than ||
+// so -1 && 1 executes first, giving us the chain:
+// null || -1 && 1  ->  null || 1  ->  1
+if (null || -1 && 1) alert( 'third' );
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Loops: while and for
+We often need to repeat actions.
+
+For example, outputting goods from a list one after another or just running the same code for each number from 1 to 10.
+
+Loops are a way to repeat the same code multiple times.
+
+
+
+Labels for break/continue
+Sometimes we need to break out from multiple nested loops at once.
+
+For example, in the code below we loop over i and j, prompting for the coordinates (i, j) from (0,0) to (2,2):
+
+ for (let i = 0; i < 3; i++) {
+
+  for (let j = 0; j < 3; j++) {
+
+    let input = prompt(`Value at coords (${i},${j})`, '');
+
+    // what if we want to exit from here to Done (below)?
+  }
+}
+
+alert('Done!');
+We need a way to stop the process if the user cancels the input.
+
+The ordinary break after input would only break the inner loop. That’s not sufficient–labels, come to the rescue!
+
+A label is an identifier with a colon before a loop:
+
+labelName: for (...) {
+  ...
+}
+The break <labelName> statement in the loop below breaks out to the label:
+
+ 
+
+
+
+
+
+
+                                 outer: for (let i = 0; i < 3; i++) {
+
+  for (let j = 0; j < 3; j++) {
+
+    let input = prompt(`Value at coords (${i},${j})`, '');
+
+    // if an empty string or canceled, then break out of both loops
+    if (!input) break outer; // (*)
+
+    // do something with the value...
+  }
+}
+alert('Done!');
+In the code above, break outer looks upwards for the label named outer and breaks out of that loop.
+
+So the control goes straight from (*) to alert('Done!').
+
+We can also move the label onto a separate line:
+
+outer:
+for (let i = 0; i < 3; i++) { ... }
+The continue directive can also be used with a label. In this case, code execution jumps to the next iteration of the labeled loop.
+
+Labels do not allow to “jump” anywhere
+Labels do not allow us to jump into an arbitrary place in the code.
+
+For example, it is impossible to do this:
+
+break label; // doesn't jumps to the label below
+
+label: for (...)
+A call to break/continue is only possible from inside a loop and the label must be somewhere above the directive.
+
+Summary
+We covered 3 types of loops:
+
+while – The condition is checked before each iteration.
+do..while – The condition is checked after each iteration.
+for (;;) – The condition is checked before each iteration, additional settings available.
+To make an “infinite” loop, usually the while(true) construct is used. Such a loop, just like any other, can be stopped with the break directive.
+
+If we don’t want to do anything in the current iteration and would like to forward to the next one, we can use the continue directive.
+
+break/continue support labels before the loop. A label is the only way for break/continue to escape a nested loop to go to an outer one.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The "switch" statement:
+A switch statement can replace multiple if checks.
+
+It gives a more descriptive way to compare a value with multiple variants.
+switch(x) {
+  case 'value1':  // if (x === 'value1')
+    ...
+    [break]
+
+  case 'value2':  // if (x === 'value2')
+    ...
+    [break]
+
+  default:
+    ...
+    [break]
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Functions:
+
+A function declaration looks like this:
+
+function name(parameters, delimited, by, comma) {
+  /* code */
+}
+Values passed to a function as parameters are copied to its local variables.
+A function may access outer variables. But it works only from inside out. The code outside of the function doesn’t see its local variables.
+A function can return a value. If it doesn’t, then its result is undefined.
+To make the code clean and easy to understand, it’s recommended to use mainly local variables and parameters in the function, not outer variables.
+
+It is always easier to understand a function which gets parameters, works with them and returns a result than a function which gets no parameters, but modifies outer variables as a side-effect.
+
+Function naming:
+
+A name should clearly describe what the function does. When we see a function call in the code, a good name instantly gives us an understanding what it does and returns.
+A function is an action, so function names are usually verbal.
+There exist many well-known function prefixes like create…, show…, get…, check… and so on. Use them to hint what a function does.
+Functions are the main building blocks of scripts. Now we’ve covered the basics, so we actually can start creating and using them. But that’s only the beginning of the path. We are going to return to them many times, going more deeply into their advanced features.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+00:00 What is JavaScript
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+04:41 Setting Up the Development Environment 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+07:52 JavaScript in Browsers
+ 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+11:41 Separation of Concerns
+place all js code in js file 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+13:47 JavaScript in Node
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+16:11 Variables
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+21:49 Constants
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+23:35 Primitive Types 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+26:47 Dynamic Typing 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+30:06 Objects
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+35:22 Arrays
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+39:41 Functions
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+44:22 Types of Functions 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
