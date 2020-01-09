@@ -1,28 +1,28 @@
-###What is ECMAscript 5?
+# What is ECMAscript 5?
 is Known as 
-##The "use strict" Directive
+## The "use strict" Directive
 "use strict" defines that the JavaScript code should be executed in "strict mode".
-##String.trim()
+## String.trim()
 String.trim()
 String.trim() removes whitespace from both sides of a string.
-#Example
+# Example
 var str = "       Hello World!        ";
 
-##Array.isArray()
+## Array.isArray()
 
 The isArray() method checks whether an object is an array.
 
-#Example
+# Example
 function myFunction() {
   var fruits = ["Banana", "Orange", "Apple", "Mango"];
   document.getElementById("demo").innerHTML = Array.isArray(fruits);
 }
 
-##Array.forEach()
+## Array.forEach()
 
 The forEach() method calls a function once for each array element.
 
-#Example
+# Example
 var txt = "";
 var numbers = [45, 4, 9, 16, 25];
 numbers.forEach(myFunction);
@@ -31,15 +31,15 @@ function myFunction(value, index, array) {
   txt = txt + value + "<br>";
 }
 
-##Array.map()
+## Array.map()
 The map() method creates a new array by performing a function on each array element.
 
 The map() method does not execute the function for array elements without values.
 
 The map() method does not change the original array.
-This #example multiplies each array value by 2:
+This # example multiplies each array value by 2:
 
-#Example
+# Example
 var numbers1 = [45, 4, 9, 16, 25];
 var numbers2 = numbers1.map(myFunction);
 
@@ -51,15 +51,15 @@ Note that the function takes 3 arguments:
 The item value
 The item index
 The array itself
-The #example above uses only the value parameter.
+The # example above uses only the value parameter.
 
-##Array.filter()
+## Array.filter()
 
 The filter() method creates a new array with array elements that passes a test.
 
-This #example creates a new array from elements with a value larger than 18:
+This # example creates a new array from elements with a value larger than 18:
 
-#Example
+# Example
 var numbers = [45, 4, 9, 16, 25];
 var over18 = numbers.filter(myFunction);
 
@@ -71,9 +71,9 @@ Note that the function takes 3 arguments:
 The item value
 The item index
 The array itself
-The #example above uses only the value parameter.
+The # example above uses only the value parameter.
 
-##Array.reduce()
+## Array.reduce()
 
 The reduce() method runs a function on each array element to produce (reduce it to) a single value.
 
@@ -81,9 +81,9 @@ The reduce() method works from left-to-right in the array. See also reduceRight(
 
 The reduce() method does not reduce the original array.
 
-This #example finds the sum of all numbers in an array:
+This # example finds the sum of all numbers in an array:
 
-#Example
+# Example
 var numbers1 = [45, 4, 9, 16, 25];
 var sum = numbers1.reduce(myFunction);
 
@@ -96,13 +96,13 @@ The total (the initial value / previously returned value)
 The item value
 The item index
 The array itself
-The #example above does not use the index and array parameters.
+The # example above does not use the index and array parameters.
 
-##Array.reduceRight()
+## Array.reduceRight()
 
-This #example also finds the sum of all numbers in an array:
+This # example also finds the sum of all numbers in an array:
 
-#Example
+# Example
 var numbers1 = [45, 4, 9, 16, 25];
 var sum = numbers1.reduceRight(myFunction);
 
@@ -110,11 +110,11 @@ function myFunction(total, value) {
   return total + value;
 }
 
-##Array.every()
+## Array.every()
 
-This #example checks if all values are over 18:
+This # example checks if all values are over 18:
 
-#Example
+# Example
 var numbers = [45, 4, 9, 16, 25];
 var allOver18 = numbers.every(myFunction);
 
@@ -122,11 +122,11 @@ function myFunction(value) {
   return value > 18;
 } 
 
-##Array.some()
+## Array.some()
 
-This #example checks if some values are over 18:
+This # example checks if some values are over 18:
 
-#Example
+# Example
 var numbers = [45, 4, 9, 16, 25];
 var allOver18 = numbers.some(myFunction);
 
@@ -134,23 +134,23 @@ function myFunction(value) {
   return value > 18;
 }
 
-##Array.indexOf()
+## Array.indexOf()
 
 Search an array for an element value and returns its position.
 
-#Example
+# Example
 var fruits = ["Banana", "Orange", "Apple", "Mango"];
 var a = fruits.indexOf("Apple");
 
-##Array.lastIndexOf()
+## Array.lastIndexOf()
 
 Search an array for an element value and returns its position.
 
-#Example
+# Example
 var fruits = ["Banana", "Orange", "Apple", "Mango"];
 var a = fruits.indexOf("Apple");
 
-##JSON.parse()
+## JSON.parse()
 
 A common use of JSON is to receive data from a web server.
 
@@ -176,7 +176,7 @@ document.getElementById("demo").innerHTML = obj.name + ", " + obj.age +", " +obj
 </body>
 </html>
 
-##JSON.stringify()
+## JSON.stringify()
 
 A common use of JSON is to send data to a web server.
 
@@ -192,22 +192,22 @@ The result will be a string following the JSON notation.
 
 myJSON is now a string, and ready to be sent to a server:
 
-#Example
+# Example
 var obj = {"name":"John", "age":30, "city":"New York"};
 var myJSON = JSON.stringify(obj);
 document.getElementById("demo").innerHTML = myJSON;
 
-##Date.now()
+## Date.now()
 
 Date.now() returns the number of milliseconds since zero date (January 1. 1970 00:00:00 UTC).
 
-#Example
+# Example
 var timInMSs = Date.now();
 
-##Property Getters and Setters
-##New Object Property Methods
+## Property Getters and Setters
+## New Object Property Methods
 
-###ECMAScript 5 Syntactical Changes
+## #ECMAScript 5 Syntactical Changes
 Property access [ ] on strings
 Trailing commas in array and object literals
 Multiline string literals
